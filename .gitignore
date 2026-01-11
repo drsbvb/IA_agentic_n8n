@@ -1,0 +1,18 @@
+# Secrets
+.env
+.env.*
+!*.example
+
+# Vault data
+vault/data/
+vault/file/
+
+# n8n data
+n8n/data/
+.n8n/
+
+# Docker
+*.log
+
+# OS
+.DS_Store

@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+PROJECT_ROOT="$(pwd)"
+
+echo "📁 Initialisation de la structure du projet n8n-agent..."
+echo "📍 Répertoire racine : $PROJECT_ROOT"
+
+# --- Dossiers principaux ---
+mkdir -p n8n
+mkdir -p vault/policies
+mkdir -p scripts
+mkdir -p docs
+
+# --- Fichiers n8n ---
+touch n8n/docker-compose.yml
+touch n8n/.env.example
+touch n8n/README.md
+
+# --- Fichiers Vault ---
+touch vault/docker-compose.yml
+touch vault/README.md
+touch vault/policies/n8n-policy.hcl
+
+# --- Scripts ---
+touch scripts/init-vault.sh
+touch scripts/unseal-vault.sh
+touch scripts/backup.sh
+
+# --- Documentation ---
+touch docs/architecture.md
+touch docs/security.md
+touch docs/workflows.md
+
+# --- Git ---
+if [ ! -f .gitignore ]; then
+  cat << 'EOF' > .gitignore
+# Secrets
+.env
+.env.*
+!*.example
+
+# Vault data
+vault/data/
+vault/file/
+
+# n8n data
+n8n/data/
+.n8n/
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+EOF
+  echo "✅ .gitignore créé"
+else
+  echo "ℹ️  .gitignore déjà présent"
+fi
+
+echo "✅ Structure du projet créée avec succès."
+echo "👉 Tu peux maintenant faire : git status"
