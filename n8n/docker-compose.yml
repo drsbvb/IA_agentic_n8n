@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - N8N_TLS_KEY=/home/node/certs/n8n.key
+      - N8N_TLS_CERT=/home/node/certs/n8n.crt
+    volumes:
+      - ./data:/home/node/.n8n
+      - ./certs:/home/node/certs
+    networks:
+      - n8n-net   # <-- ajout du network pour communiquer avec Vault
+
+# Déclaration du network externe
+networks:
+  n8n-net:
+    external: true
+

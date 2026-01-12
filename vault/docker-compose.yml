@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  vault:
+    image: hashicorp/vault:1.15
+    container_name: vault
+    restart: unless-stopped
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+      VAULT_LOCAL_CONFIG: |
+        ui = true
+
+        storage "file" {
+          path = "/vault/data"
+        }
+
+        listener "tcp" {
+          address     = "0.0.0.0:8200"
+          tls_disable = 1
+        }
+    volumes:
+      - ./data:/vault/data
+      - ./file:/vault/file
+    command: vault server -config=/vault/config
+    networks:
+      - n8n-net   # <-- syntaxe correcte pour utiliser un network externe
+
+# Déclaration du network externe
+networks:
+  n8n-net:
+    external: true
+

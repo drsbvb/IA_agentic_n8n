@@ -6,10 +6,12 @@
 # Vault data
 vault/data/
 vault/file/
+vault-keys.txt
 
 # n8n data
 n8n/data/
 .n8n/
+n8n/.env
 
 # Docker
 *.log
