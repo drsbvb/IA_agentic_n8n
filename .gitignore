@@ -2,7 +2,7 @@
 .env
 .env.*
 !*.example
-certs/
+certs/.
 # Vault data
 vault/data/
 vault/file/
